@@ -1,0 +1,31 @@
+.stats_block{
+    display: inline-block;
+    border: 25px;
+    border-color: black;
+    background-color: bisque;
+}
+
+.dataframe {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.dataframe th, .dataframe td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.dataframe th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.dataframe tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.dataframe tr:hover {
+    background-color: #ddd;
+}
