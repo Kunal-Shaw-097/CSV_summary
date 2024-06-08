@@ -1,8 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="{% static 'javascript/columns_selector.js' %}"></script>
     <title>Document</title>
 </head>
 <body>
@@ -29,20 +32,32 @@
     </form>
     {% endif %}
 
-    {% for key,value in stats.items %}
-        <li>{{ key }} :
-            {% for key1,value1 in value.items %}
-            <ul>
-                <li>{{ key1 }} : {{ value1 }}</li>
-            </ul>
-            {% endfor %} 
-        </li> 
+    <ol>
+    {% for key,value in stats_dict.items %}
+    <div class="stats_block">
+            <li>{{ key }} :
+                {% for key1,value1 in value.items %}
+                <ul>
+                    <li>{{ key1 }} : {{ value1 }}</li>
+                </ul>
+                {% endfor %} 
+            </li> 
+       
+    </div>
     {% endfor %} 
+    </ol>
 
-    <!-- <form method="POST" enctype="multipart/form-data"> 
+    {% if axis_select %}
+    <form method="POST" enctype="multipart/form-data" action="{% url 'main:generate_plots' %}"> 
         {% csrf_token %} 
-        {{ plotter.as_p }} 
-    <input type="submit" value="Submit">  -->
-</form> 
+        {{ axis_select.as_p }} 
+    <input type="submit" value="Submit">
+    </form>
+    {% endif %}
+
+    {% if plot %}
+    {{ plot|safe }}
+    {% endif %}
+
 </body>
 </html>
