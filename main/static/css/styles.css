@@ -1,14 +1,82 @@
+body{
+    background: rgba(0,255,89,0.15);
+}
+
+.main_container{
+
+    border : 1px solid;
+    border-color: #008000;
+    min-height: 500px;
+    margin-top: 5% ;
+    background-color: rgba(1, 75, 27, 0.295);
+    overflow: scroll;
+}
+
+#table_title{
+    font-size: large;
+    font-weight: bold;
+    text-align: center;
+}
+
 .stats_block{
     display: inline-block;
-    border: 25px;
+    border: 1px solid;
     border-color: black;
-    background-color: bisque;
+    border-radius: 5%;
+    background-color: #4caf4fd7;
+    color: black;
+    padding: 1%;
+    margin: 1%;
 }
+
+
+#stats_form{
+    text-align: center;
+    margin: 3%;
+}
+
+#stats_form div div{
+    display: inline-block;
+    border-bottom: 1px solid;
+    border-color: #4CAF50;
+    margin: 0% 1% 0% 0%;
+}
+
+
+#stats_form div input[type="checkbox"] {
+    accent-color: #4CAF50;
+    height: 20px;
+    width: 20px;
+}
+
+#plot_form{
+    text-align: center;
+    margin-top:2%;
+}
+
+#csv_form{
+    text-align: center;
+}
+
+#reupload_button_div{
+    text-align: center;
+    margin: 3% 0% 5% 0%;
+}
+
+#reupload_button{
+    border: 1px solid;
+    border-color: black;
+    border-radius: 5%;
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+    padding: 1%;
+}   
 
 .dataframe {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    margin: 2% 0% 5% 0%;
 }
 
 .dataframe th, .dataframe td {
@@ -28,4 +96,8 @@
 
 .dataframe tr:hover {
     background-color: #ddd;
+}
+
+#plot{
+    text-align: center;
 }

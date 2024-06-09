@@ -9,6 +9,10 @@ import os
 
 def index(request) :
     csvform = csv_form()
+    session_keys = list(request.session.keys())
+    print(session_keys)
+    for id in session_keys:
+        del request.session[id]
     return render(request, "index.html", context= {"csvform" : csvform})
 
 # Create your views here.
@@ -64,10 +68,13 @@ def calculate_stats(request):
 
         for col in stat_cols :
             stats_dict[col] = {
-                "Mean" : float(num_df[col].mean()),
-                "Media": float(num_df[col].median()),
-                "Standard Deviation": float(num_df[col].std()),
+                "Mean" : round(float(num_df[col].mean()),2),
+                "Median": round(float(num_df[col].median()), 2),
+                "Standard Deviation": round(float(num_df[col].std()), 2),
                 "Missing Value Count": int(num_df[col].isna().sum()),
+                "Max value": round(float(num_df[col].max()), 2), 
+                "Min value": round(float(num_df[col].min()), 2),
+                "Unique value count": int(num_df[col].unique().__len__()),
             }
 
         request.session['stats_dict'] = stats_dict
@@ -98,15 +105,52 @@ def generate_plots(request):
 
         df = pd.DataFrame(request.session['df'])
         top10 = df.head(10).to_html()
-        x_col, y_col, plot_type = request.POST['column_x'], request.POST['column_y'], request.POST['plot_type']
+        #x_col, y_col, plot_type = request.POST['column_x'], request.POST['column_y'], request.POST['plot_type']
+        x_col, plot_type = request.POST['column_x'], request.POST['plot_type']
+        print(x_col)
 
-        fig = plt.figure()
-        ax = fig.add_subplot()
-        df.plot(x=x_col, y=y_col, ax=ax, kind=plot_type)
-        html = mpld3.fig_to_html(fig)
+        # if not x_col == y_col :
+        #     fig = plt.figure()
+        #     ax = fig.add_subplot()
+        #     df.plot(x=x_col, y=y_col, ax=ax, kind=plot_type)
+        #     html = mpld3.fig_to_html(fig)
+        # else :
+        #     html = "Column names can not be same"
 
+        fig = plt.figure(figsize=(12, 10))
+        plt.rcParams['font.size'] = 22
 
-        request.session['plotted_columns_types'] = [x_col, y_col, plot_type]
+        if plot_type == "hist" :
+            plt.hist(df[x_col])
+
+        elif plot_type == "box" :
+            plt.boxplot(df[x_col])
+
+        else :
+
+            bins = pd.cut(df[x_col], bins=min(len(df[x_col].unique()), 4))
+            bin_counts = bins.value_counts().sort_index()
+
+            bin_labels = [f'{round(interval.left, 2)} - {round(interval.right, 2)}' for interval in bin_counts.index]
+
+            bin_counts_list = bin_counts.tolist()
+
+            wedges, texts = plt.pie(bin_counts_list, startangle=90, shadow=True, explode=[0.1]*len(bin_counts_list))
+
+            total = sum(bin_counts_list)
+            legend_labels = [f'{label}: {count} ({count/total:.1%})' for label, count in zip(bin_labels, bin_counts_list)]
+
+            plt.legend(wedges, legend_labels, title="Ranges", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+
+            # Set the title
+            plt.title(f"Pie plot for \"{x_col}\"")
+
+            plt.tight_layout()
+
+        html = mpld3.fig_to_html(fig, figid='plot')
+
+        #request.session['plotted_columns_types'] = [x_col, y_col, plot_type]
+        request.session['plotted_columns_types'] = [x_col, plot_type]
         request.session['plot_html'] = html
 
         context = {

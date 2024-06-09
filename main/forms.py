@@ -5,7 +5,7 @@ class csv_form(forms.Form):
 
 
 class column_select_form(forms.Form):
-    columns = forms.MultipleChoiceField(label="Select Column to generate stats", choices=[], widget=forms.CheckboxSelectMultiple)
+    columns = forms.MultipleChoiceField(label="Select Column to generate stats", choices=[], widget=forms.CheckboxSelectMultiple, required=False)
     
     def __init__(self, *args, **kwargs):
         column_names = kwargs.pop('columns', [])
@@ -18,20 +18,20 @@ class column_select_form(forms.Form):
 
 
 plot_choices = [
-    ("line", "Line Plot"),
-    ("bar" , "Vertical Bar Plot"),
-    ("barh", "Horizontal Bar Plot"),
+   # ("line", "Line Plot"),
+   # ("bar" , "Vertical Bar Plot"),
+   # ("barh", "Horizontal Bar Plot"),
     ("hist", "Histogram"),
     ("box" , "Boxplot"),
-    ("kde" , "Kernal Density Estimation Plot"),
-    ("area", "Area Plot"),
+   # ("kde" , "Kernal Density Estimation Plot"),
+   # ("area", "Area Plot"),
     ("pie" , "Pie Plot"),
-    ("scatter", "Scatter Plot"),
+   # ("scatter", "Scatter Plot"),
 ]
 
 class axis_select_form(forms.Form):
-    column_x = forms.ChoiceField(label='Select X-axis Column to generate plot', choices=[])
-    column_y = forms.ChoiceField(label='Select Y-axis Column to generate stats', choices=[])
+    column_x = forms.ChoiceField(label='Select Column to generate plot', choices=[])
+   #column_y = forms.ChoiceField(label='Select Y-axis Column to generate stats', choices=[])
     plot_type = forms.ChoiceField(label='Select the type of plot', choices=plot_choices)
     
     def __init__(self, *args, **kwargs):
@@ -39,12 +39,12 @@ class axis_select_form(forms.Form):
         initial_choices = kwargs.pop('initial_choices', [])
         super(axis_select_form, self).__init__(*args, **kwargs)
         self.fields['column_x'].choices = [(col, col) for col in columns]
-        self.fields['column_y'].choices = [(col, col) for col in columns]
+        #self.fields['column_y'].choices = [(col, col) for col in columns]
         if initial_choices: 
             print(initial_choices)
             print(initial_choices[0])
             self.fields['column_x'].initial = [initial_choices[0]]
-            self.fields['column_y'].initial = [initial_choices[1]]
-            self.fields['plot_type'].initial = [initial_choices[2]]
+            #self.fields['column_y'].initial = [initial_choices[1]]
+            self.fields['plot_type'].initial = [initial_choices[1]]
 
 

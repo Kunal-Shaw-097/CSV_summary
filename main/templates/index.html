@@ -5,58 +5,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <script src="{% static 'javascript/columns_selector.js' %}"></script>
     <title>Document</title>
 </head>
 <body>
     {% if not uploaded %}
-    <form method="POST" enctype="multipart/form-data" action="{% url 'main:upload_csv' %}"> 
+    <form method="POST" id="csv_form" enctype="multipart/form-data" action="{% url 'main:upload_csv' %}"> 
         {% csrf_token %} 
         {{ csvform.as_p }} 
         <input type="submit" value="Submit"> 
     </form>
     {% else %}
-    <a href="{% url 'main:index' %}" >Reupload</a>
+    <div id="reupload_button_div"><a id="reupload_button" href="{% url 'main:index' %}" >Upload another CSV</a></div>
     {% endif %}
 
     {% if top10 %}
+        <div id="table_title">Dataframe Head</div>
         {{ top10|safe}}
     {% endif %}
 
-
     {% if column_form %}
-    <form method="POST" enctype="multipart/form-data" action="{% url 'main:get_stats' %}"> 
-        {% csrf_token %} 
-        {{ column_form.as_p }} 
-    <input type="submit" value="Submit">
-    </form>
-    {% endif %}
-
-    <ol>
-    {% for key,value in stats_dict.items %}
-    <div class="stats_block">
-            <li>{{ key }} :
-                {% for key1,value1 in value.items %}
-                <ul>
-                    <li>{{ key1 }} : {{ value1 }}</li>
-                </ul>
-                {% endfor %} 
-            </li> 
-       
+    <div class="main_container">
+        <form method="POST" id="stats_form" enctype="multipart/form-data" action="{% url 'main:get_stats' %}"> 
+            {% csrf_token %} 
+            {{ column_form.as_p }} 
+        <input type="submit" value="Submit">
+        </form>
+        
+        {% for key,value in stats_dict.items %}
+        <div class="stats_block">
+                {{ key }} :
+                    <ul>
+                    {% for key1,value1 in value.items %}
+                        <li>{{ key1 }} : {{ value1 }}</li>
+                    {% endfor %} 
+                    </ul>   
+        </div>
+        {% endfor %} 
     </div>
-    {% endfor %} 
-    </ol>
+    {% endif %}
 
     {% if axis_select %}
-    <form method="POST" enctype="multipart/form-data" action="{% url 'main:generate_plots' %}"> 
-        {% csrf_token %} 
-        {{ axis_select.as_p }} 
-    <input type="submit" value="Submit">
-    </form>
-    {% endif %}
-
-    {% if plot %}
-    {{ plot|safe }}
+    <div class="main_container"> 
+        <form method="POST" id="plot_form" enctype="multipart/form-data" action="{% url 'main:generate_plots' %}"> 
+            {% csrf_token %} 
+            {{ axis_select.as_p }} 
+        <input type="submit" value="Submit">
+        </form>
+        
+        {% if plot %}
+            {{ plot|safe }}
+        {% endif %}
+    </div>
     {% endif %}
 
 </body>
