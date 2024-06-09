@@ -3,7 +3,6 @@ body{
 }
 
 .main_container{
-
     border : 1px solid;
     border-color: #008000;
     min-height: 500px;
@@ -32,7 +31,8 @@ body{
 
 #stats_form{
     text-align: center;
-    margin: 3%;
+    margin-top: 3%;
+    width: 100%;
 }
 
 #stats_form div div{
@@ -52,6 +52,12 @@ body{
 #plot_form{
     text-align: center;
     margin-top:2%;
+    width: 100%;
+}
+
+#plot_form label{
+    font-weight: bold;
+    font-size: medium;
 }
 
 #csv_form{
