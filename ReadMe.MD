@@ -23,6 +23,7 @@ python manage.py runserver
 
 ##
 
+You can use the sample csv in the <b>"sample_csv"</b> folder to test the application.
 
 ![](imgs/index.png)
 
