@@ -10,6 +10,9 @@ cd CSV_summary
 ```
 pip install -r requirements.txt
 ```
+```
+python manage.py migrate
+```
 
 2.<b>Start the Webapp</b>
 ```
