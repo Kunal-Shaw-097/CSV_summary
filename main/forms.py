@@ -13,7 +13,6 @@ class column_select_form(forms.Form):
         super(column_select_form, self).__init__(*args, **kwargs)
         self.fields['columns'].choices = [(col, col) for col in column_names]
         if initial_choices : 
-            print(initial_choices)
             self.fields['columns'].initial = initial_choices
 
 
@@ -41,10 +40,17 @@ class axis_select_form(forms.Form):
         self.fields['column_x'].choices = [(col, col) for col in columns]
         #self.fields['column_y'].choices = [(col, col) for col in columns]
         if initial_choices: 
-            print(initial_choices)
-            print(initial_choices[0])
             self.fields['column_x'].initial = [initial_choices[0]]
             #self.fields['column_y'].initial = [initial_choices[1]]
             self.fields['plot_type'].initial = [initial_choices[1]]
 
+
+imputation_choices = [
+    ("mean", "Mean Imputation"),
+    ("median", "Median Imputation"),
+    ("mode", "Mode Imputation"),
+]
+
+class missing_values_form(forms.Form):
+    missing_value_strat = forms.ChoiceField(label='Select Imputation method', choices=imputation_choices)
 
