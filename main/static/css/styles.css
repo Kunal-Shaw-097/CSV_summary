@@ -1,14 +1,49 @@
-body{
-    background: rgba(0,255,89,0.15);
+/* body{
+    background: radial-gradient(
+      100% 100% at 0% 0%,
+      rgba(115, 255, 0, 0.3) 0%,
+      rgba(2, 247, 2, 0.3) 100%
+    );
+} */
+   
+
+body {
+    background: linear-gradient(120deg, rgba(115, 255, 50, 0.2), rgba(115, 255, 50, 0.35), rgba(115, 255, 50, 0.45), rgba(115, 255, 50, 0.6));
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.err_msg{
+    color: red;
+    text-align: center;
 }
 
 .main_container{
-    border : 1px solid;
-    border-color: #008000;
     min-height: 500px;
     margin-top: 5% ;
-    background-color: rgba(1, 75, 27, 0.295);
     overflow: scroll;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.35); 
+    border: 0px none rgba(100, 100, 100, 0);
+    border-radius: 24px;
+    background: radial-gradient(
+      100% 100% at 0% 0%,
+      rgba(115, 255, 0, 0.3) 0%,
+      rgba(2, 247, 2, 0.3) 100%
+    );
+    background-blend-mode: normal;
+    backdrop-filter: blur(42px);
 }
 
 #table_title{
@@ -102,6 +137,56 @@ body{
 
 .dataframe tr:hover {
     background-color: #ddd;
+}
+
+#csv_form {
+    padding: 20px; 
+    width: 30%; 
+    margin: 15% 20% 25% 30%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); 
+    font-size: 36px;
+    border: 0px none rgba(100, 100, 100, 0);
+    border-radius: 24px;
+    background: radial-gradient(
+      100% 100% at 0% 0%,
+      rgba(115, 255, 0, 0.3) 0%,
+      rgba(2, 247, 2, 0.3) 100%
+    );
+    background-blend-mode: normal;
+    backdrop-filter: blur(42px);
+}
+
+#csv_form label { 
+    color: #333; 
+    display: block; 
+    margin-bottom: 10px; 
+    font-weight: bold;
+}
+
+#csv_form input[type="file"] {
+    display: block; 
+    margin: 0 auto 20px; 
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    background-color: #fff; 
+    cursor: pointer; 
+}
+
+#csv_form input[type="submit"] {
+    background-color: #4CAF50; 
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
+    text-align: center; 
+    text-decoration: none;
+    display: inline-block; 
+    border-radius: 5px; 
+    cursor: pointer; 
+}
+
+#csv_form input[type="submit"]:hover {
+    background-color: #45a049;
 }
 
 #plot{

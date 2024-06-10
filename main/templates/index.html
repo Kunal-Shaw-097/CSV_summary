@@ -25,7 +25,7 @@
 
     {% if column_form %}
     <div class="main_container">
-        <form method="POST" id="stats_form" enctype="multipart/form-data" action="{% url 'main:get_stats' %}"> 
+        <form method="POST" id="stats_form" enctype="multipart/form-data" action="{% url 'main:get_stats' %}#stats_form"> 
             {% csrf_token %} 
             {{ column_form.as_p }} 
         <input type="submit" value="Submit">
@@ -35,8 +35,18 @@
         <div class="stats_block">
                 {{ key }} :
                     <ul>
-                    {% for key1,value1 in value.items %}
+                   {% for key1,value1 in value.items %}
+                        {%  if not forloop.last %}
                         <li>{{ key1 }} : {{ value1 }}</li>
+                        {% elif forloop.last and value1%}
+                            <p class="err_msg" >Missing values in this columns.Lets handle them!!</p>
+                            <form method="POST" id="missing_value_form" enctype="multipart/form-data" action="{% url 'main:handle_missing_values' %}#stats_form"> 
+                                {% csrf_token %} 
+                                {{ missing_value_form.as_p }}
+                                <input type="hidden" name="column_name_for_imputation" value="{{ key }}">
+                                <input type="submit" value="Apply"> 
+                            </form>
+                        {% endif %}
                     {% endfor %} 
                     </ul>   
         </div>
@@ -46,12 +56,14 @@
 
     {% if axis_select %}
     <div class="main_container"> 
-        <form method="POST" id="plot_form" enctype="multipart/form-data" action="{% url 'main:generate_plots' %}"> 
+        <form method="POST" id="plot_form" enctype="multipart/form-data" action="{% url 'main:generate_plots' %}#plot_form"> 
             {% csrf_token %} 
             {{ axis_select.as_p }} 
         <input type="submit" value="Submit">
         </form>
-        
+        {% if null_values %}
+        <p class="err_msg"> Column contains Null values.</p>
+        {% endif %}
         {% if plot %}
             {{ plot|safe }}
         {% endif %}
