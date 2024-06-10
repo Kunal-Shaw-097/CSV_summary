@@ -7,7 +7,8 @@ urlpatterns= [
     path('', views.index,name='index'),
     path('upload_csv', views.upload_csv, name='upload_csv'),
     path('get_stats', views.calculate_stats, name='get_stats'),
-    path('generate_plots', views.generate_plots, name='generate_plots')
+    path('generate_plots', views.generate_plots, name='generate_plots'),
+    path('handle_missing', views.handle_missing_values, name='handle_missing_values'),
 ]
 
 
