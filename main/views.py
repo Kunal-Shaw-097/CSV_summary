@@ -126,7 +126,7 @@ def handle_missing_values(request):
             elif imputation_strat == "median":
                 df[imputation_col] = df[imputation_col].fillna(df[imputation_col].median())
             else:
-                df[imputation_col] = df[imputation_col].fillna(df[imputation_col].mode())
+                df[imputation_col] = df[imputation_col].fillna(df[imputation_col].mode().dropna().values[0])
 
             request.session['stats_dict'][imputation_col] = {
                 "Mean" : round(float(df[imputation_col].mean()),2),
