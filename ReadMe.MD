@@ -7,6 +7,11 @@ git clone https://github.com/Kunal-Shaw-097/CSV_summary
 ```
 cd CSV_summary
 ```
+if Using uv
+```
+uv pip install -r requirements.txt
+```
+else just
 ```
 pip install -r requirements.txt
 ```
